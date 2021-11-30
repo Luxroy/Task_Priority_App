@@ -283,7 +283,7 @@ class Ui_MainWindow(object):
                 date_edit.setEnabled(False)
         # - POPULATE NOTES -
         print(f"Populating from notes_list at: {notes_list}")
-        self.reminder_lineEdit.setText(notes_list[-3])
+        self.reminder_lineEdit.setText(notes_list[-1])
         self.reminder_lineEdit_2.setText(notes_list[-2])
         wb.close()
         print(f"Populated in order: {id_list[0], id_list[1], id_list[2]}")
@@ -375,9 +375,8 @@ class Ui_MainWindow(object):
         for coordinate, ui_task in zip(db_tasks, ui_tasks):
             ws[str(coordinate)] = ui_task
         # -- SAVE NOTES IN DB --
-        ws["F" + str(ws.max_row - 1)] = self.reminder_lineEdit.text()
-        ws["F" + str(ws.max_row)] = self.reminder_lineEdit_2.text()
-
+        ws["F" + str(ws.max_row)] = self.reminder_lineEdit.text()
+        ws["F" + str(ws.max_row - 1)] = self.reminder_lineEdit_2.text()
         wb.save(self.db_name)
         wb.close()
 
@@ -399,6 +398,11 @@ class Ui_MainWindow(object):
         ws["B" + str(ws.max_row)] = "New task"
         ws["C" + str(ws.max_row)] = datetime.datetime.now()
         ws["E" + str(ws.max_row)] = False
+        # -- SAVE NOTES --
+        first_note = ws["F" + str(ws.max_row - 1)].value
+        second_note = ws["F" + str(ws.max_row - 2)].value
+        ws["F" + str(ws.max_row)] = first_note
+        ws["F" + str(ws.max_row - 1)] = second_note
         # -- RESET DATE EDIT --
         self.first_dateEdit.setEnabled(True)
         wb.save(self.db_name)
@@ -424,6 +428,11 @@ class Ui_MainWindow(object):
         ws["B" + str(ws.max_row)] = "New task"
         ws["C" + str(ws.max_row)] = datetime.datetime.now()
         ws["E" + str(ws.max_row)] = False
+        # -- SAVE NOTES --
+        first_note = ws["F" + str(ws.max_row - 1)].value
+        second_note = ws["F" + str(ws.max_row - 2)].value
+        ws["F" + str(ws.max_row)] = first_note
+        ws["F" + str(ws.max_row - 1)] = second_note
         # -- RESET DATE EDIT --
         self.second_dateEdit.setEnabled(True)
         wb.save(self.db_name)
@@ -451,6 +460,11 @@ class Ui_MainWindow(object):
         ws["B" + str(ws.max_row)] = "New task"
         ws["C" + str(ws.max_row)] = datetime.datetime.now()
         ws["E" + str(ws.max_row)] = False
+        # -- SAVE NOTES --
+        first_note = ws["F" + str(ws.max_row - 1)].value
+        second_note = ws["F" + str(ws.max_row - 2)].value
+        ws["F" + str(ws.max_row)] = first_note
+        ws["F" + str(ws.max_row - 1)] = second_note
         # -- RESET DATE EDIT --
         self.third_dateEdit.setEnabled(True)
         wb.save(self.db_name)
